@@ -1,0 +1,70 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>MvP Tracker</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css"/>
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<script src="./moment.js"></script> 
+	</head>
+	<body>
+		<div id="app" class="container">
+			<div class="field is-grouped">
+				<div class="control">
+					<input class="input" id="name" v-model="name" placeholder="Name"></input>
+				</div>
+				<div class="control">
+					<input class="input" id="map" v-model="map" placeholder="Map"></input>
+				</div>
+				<div class="control">
+					<input class="input" type="number" min="0" id="time" v-model.number="time" placeholder="Time(in minutes)"></input>
+				</div>
+				<div class="control">
+					<button class="button is-primary" @click="add">Add</button>
+				</div>
+			</div>
+			<div class="columns">
+				<div class="column">
+					
+					<table class="table">
+						<tr>
+							<th>Name</th>
+							<th>Map</th>
+							<th>Time</th>
+							<th>spawns in</th>
+							<th>Remaining</th>
+						</tr>
+						<tr v-for="timer in alphabeticalTimers">
+							<td>{{timer.name}}</td>
+							<td>{{timer.map}}</td>
+							<td>{{timer.time}}</td>
+							<td><input class="input is-small" :placeholder="now.format('HH:mm')" v-model="timer.killedModel"></input></td>
+							<td>{{timer.remaining}}</td>
+							<td><button class="button is-small is-primary" @click="start(timer)">Start</button</td>
+							<td><button class="button is-small is-danger" @click="remove(timer)">Remove</button</td>
+						</tr>
+					</table>
+				</div>
+				<div class="column">
+					<table class="table">
+						<tr>
+							<th>Name</th>
+							<th>Map</th>
+							<th>Time</th>
+							<th>Killed</th>
+							<th>Remaining</th>
+						</tr>
+						<tr v-for="timer in activeTimersOrdered">
+							<td>{{timer.name}}</td>
+							<td>{{timer.map}}</td>
+							<td>{{timer.time}}</td>
+							<td>{{timer.killed.format("HH:mm")}}</td>
+							<td>{{timer.remaining}}</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		<script src="./app.js"></script>
+	</body>
+</html>
